@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bed Occupancy Calculator</title>
-  <div class="back-button" style="text-align: center; margin-top: 20px;">
-    <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
-        <i class="fas fa-arrow-left"></i> Back to Home
-    </a>
-</div>
+    <div class="back-button" style="text-align: center; margin-top: 20px;">
+        <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,6 +56,12 @@
             font-size: 1.2em;
             color: green;
         }
+        .formula {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +83,16 @@
     
     <button type="button" onclick="calculateOccupancy()">Calculate</button>
 </form>
+
+<div class="formula">
+    <p><strong>Formula:</strong></p>
+    <p><code>Occupancy Rate (%) = (Total Patient Bed Hours / Total Operational Bed Hours) × 100</code></p>
+    <p><strong>Where:</strong></p>
+    <ul>
+        <li><code>Total Patient Bed Hours = Number of Visitors × Length of Stay</code></li>
+        <li><code>Total Operational Bed Hours = Number of Beds × Number of Days × 24</code></li>
+    </ul>
+</div>
 
 <div class="result" id="result"></div>
 
