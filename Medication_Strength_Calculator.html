@@ -78,20 +78,20 @@
     <h2>Medication Dilution Calculator</h2>
     <form id="calculatorForm">
         <label for="strengthDose">Current Strength (mg/ml):</label>
-        <input type="number" id="strengthDose" placeholder="Enter current strength (mg/ml)" required>
+        <input type="number" id="strengthDose" placeholder="Enter current strength (mg/ml)" value="5" required>
 
         <label for="originalVolume">Original Volume (ml):</label>
-        <input type="number" id="originalVolume" placeholder="Enter original volume (ml)" required>
+        <input type="number" id="originalVolume" placeholder="Enter original volume (ml)" value="3" required>
 
-        <label for="desiredStrength">Desired Final Strength (mg/ml):</label>
-        <input type="number" id="desiredStrength" placeholder="Enter desired final strength (mg/ml)" required>
+        <label for="desiredStrength">Desired Final Concentration (mg/ml):</label>
+        <input type="number" id="desiredStrength" placeholder="Enter desired concentration (mg/ml)" value="1" required>
 
         <button type="button" onclick="calculateDiluentVolume()">Calculate Volume to Add</button>
     </form>
     
     <div class="formula">
         <p><strong>Formula:</strong></p>
-        <p><code>Volume to Add (ml) = ((Current Strength × Original Volume) / Desired Concentration) - Original Volume</code></p>
+        <p><code>Volume to Add = Desired Volume - Original Volume</code></p>
     </div>
     
     <p id="result"></p>
@@ -110,11 +110,11 @@
             return;
         }
 
-        // Calculate the final total volume needed to achieve the desired concentration
-        const finalTotalVolume = (strengthDose * originalVolume) / desiredStrength;
+        // Calculate the desired volume to achieve the desired strength
+        const desiredVolume = (strengthDose * originalVolume) / desiredStrength;
 
         // Calculate the volume of diluent to add
-        const diluentVolume = finalTotalVolume - originalVolume;
+        const diluentVolume = desiredVolume - originalVolume;
 
         // Check if the calculation is valid (volume to add must be positive)
         if (diluentVolume <= 0) {
