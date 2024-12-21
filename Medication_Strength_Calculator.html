@@ -77,53 +77,53 @@
 <div class="calculator">
     <h2>Medication Dilution Calculator</h2>
     <form id="calculatorForm">
-        <label for="strengthDose">Current Strength (mg/ml):</label>
-        <input type="number" id="strengthDose" placeholder="Enter current strength (mg/ml)" value="5" required>
+        <label for="currentStrength">Current Strength (mg/ml):</label>
+        <input type="number" id="currentStrength" placeholder="Enter current strength (mg/ml)" value="5" required>
 
         <label for="originalVolume">Original Volume (ml):</label>
         <input type="number" id="originalVolume" placeholder="Enter original volume (ml)" value="3" required>
 
-        <label for="desiredStrength">Desired Final Concentration (mg/ml):</label>
-        <input type="number" id="desiredStrength" placeholder="Enter desired concentration (mg/ml)" value="1" required>
+        <label for="desiredConcentration">Desired Final Concentration (mg/ml):</label>
+        <input type="number" id="desiredConcentration" placeholder="Enter desired concentration (mg/ml)" value="1" required>
 
-        <button type="button" onclick="calculateDiluentVolume()">Calculate Volume to Add</button>
+        <button type="button" onclick="calculateDilution()">Calculate</button>
     </form>
     
     <div class="formula">
         <p><strong>Formula:</strong></p>
-        <p><code>Volume to Add = Desired Volume - Original Volume</code></p>
+        <p><code>Amount to Dilute = Current Strength - Original Volume</code></p>
+        <p><code>Required Dose = Current Strength / Amount to Dilute</code></p>
+        <p><code>Desired Final Concentration = Desired Concentration / Required Dose</code></p>
     </div>
     
     <p id="result"></p>
 </div>
 
 <script>
-    function calculateDiluentVolume() {
+    function calculateDilution() {
         // Get input values
-        const strengthDose = parseFloat(document.getElementById("strengthDose").value);
+        const currentStrength = parseFloat(document.getElementById("currentStrength").value);
         const originalVolume = parseFloat(document.getElementById("originalVolume").value);
-        const desiredStrength = parseFloat(document.getElementById("desiredStrength").value);
+        const desiredConcentration = parseFloat(document.getElementById("desiredConcentration").value);
 
         // Check if inputs are valid
-        if (isNaN(strengthDose) || isNaN(originalVolume) || isNaN(desiredStrength) || strengthDose <= 0 || originalVolume <= 0 || desiredStrength <= 0) {
+        if (isNaN(currentStrength) || isNaN(originalVolume) || isNaN(desiredConcentration) || currentStrength <= 0 || originalVolume <= 0 || desiredConcentration <= 0) {
             document.getElementById("result").innerText = "Please enter valid positive values.";
             return;
         }
 
-        // Calculate the desired volume to achieve the desired strength
-        const desiredVolume = (strengthDose * originalVolume) / desiredStrength;
+        // Step 1: Calculate the amount to dilute
+        const amountToDilute = currentStrength - originalVolume;
 
-        // Calculate the volume of diluent to add
-        const diluentVolume = desiredVolume - originalVolume;
+        // Step 2: Calculate the required dose
+        const requiredDose = currentStrength / amountToDilute;
 
-        // Check if the calculation is valid (volume to add must be positive)
-        if (diluentVolume <= 0) {
-            document.getElementById("result").innerText = "Desired concentration is not achievable with the given inputs.";
-            return;
-        }
+        // Step 3: Calculate the desired final concentration
+        const finalConcentration = desiredConcentration / requiredDose;
 
-        // Display the result
-        document.getElementById("result").innerText = `You should add ${diluentVolume.toFixed(2)} ml of diluent to achieve a final concentration of ${desiredStrength} mg/ml.`;
+        // Step 4: Show the result
+        document.getElementById("result").innerText = 
+            `To achieve a final concentration of ${desiredConcentration} mg/ml, you should add ${amountToDilute.toFixed(2)} ml of diluent, with a required dose of ${requiredDose.toFixed(2)}. Final concentration: ${finalConcentration.toFixed(2)} mg/ml.`;
     }
 </script>
 
