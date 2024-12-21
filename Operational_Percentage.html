@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bed Occupancy Calculator</title>
+  <div class="back-button" style="text-align: center; margin-top: 20px;">
+    <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+</div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Bed Occupancy Rate Calculator</h1>
+
+<form id="occupancyForm">
+    <label for="visitors">Number of Visitors:</label>
+    <input type="number" id="visitors" required>
+    
+    <label for="los">Length of Stay (hours):</label>
+    <input type="number" id="los" required>
+    
+    <label for="beds">Number of Operational Beds:</label>
+    <input type="number" id="beds" required>
+    
+    <label for="days">Number of Days in the Month:</label>
+    <input type="number" id="days" required>
+    
+    <button type="button" onclick="calculateOccupancy()">Calculate</button>
+</form>
+
+<div class="result" id="result"></div>
+
+<script>
+    function calculateOccupancy() {
+        // Get input values
+        const visitors = parseFloat(document.getElementById('visitors').value);
+        const los = parseFloat(document.getElementById('los').value);
+        const beds = parseFloat(document.getElementById('beds').value);
+        const days = parseFloat(document.getElementById('days').value);
+
+        // Validate inputs
+        if (isNaN(visitors) || isNaN(los) || isNaN(beds) || isNaN(days) || visitors <= 0 || los <= 0 || beds <= 0 || days <= 0) {
+            document.getElementById('result').innerHTML = "<span style='color: red;'>Please enter valid numbers for all fields.</span>";
+            return;
+        }
+
+        // Calculate total patient bed hours used
+        const totalPatientBedHours = visitors * los;
+
+        // Calculate total operational bed hours available
+        const totalOperationalBedHours = beds * days * 24;
+
+        // Calculate occupancy rate
+        const occupancyRate = (totalPatientBedHours / totalOperationalBedHours) * 100;
+
+        // Display the result
+        document.getElementById('result').innerHTML = `Bed Occupancy Rate: <strong>${occupancyRate.toFixed(2)}%</strong>`;
+    }
+</script>
+
+</body>
+</html>
