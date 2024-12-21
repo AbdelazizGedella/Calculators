@@ -125,8 +125,8 @@
         <div class="formula">
             <p><strong>Formula:</strong></p>
             <p><code>FTE = (Number of staff required in 24hrs × Shift working hours × 7 Days) / 48 hours</code></p>
-            <p><strong>Additional 15% for Unproductive Days:</strong></p>
-            <p><code>Final staffing required = FTE + 15% of FTE</code></p>
+            <p><strong>Additional 23% for Unproductive Days:</strong></p>
+            <p><code>Final staffing required = FTE + 23% of FTE</code></p>
         </div>
 
         <!-- Calculation Steps with Slow Motion -->
@@ -166,7 +166,7 @@
 
             let divisor = overtime ? 60 : 48;  // Adjust divisor based on overtime check
             let FTE = (staffRequired24hrs * shiftHours * 7) / divisor; // FTE Calculation
-            let additionalCoverage = FTE * 0.15; // Additional 15% for unproductive days
+            let additionalCoverage = FTE * 0.23; // Additional 23% for unproductive days
             let totalStaffing = FTE + additionalCoverage;
 
             // Clear previous steps
@@ -179,7 +179,7 @@
 
             setTimeout(function() {
                 let step2 = document.createElement('li');
-                step2.textContent = `Step 2: Additional 15% = ${FTE.toFixed(2)} × 15% = ${additionalCoverage.toFixed(2)}`;
+                step2.textContent = `Step 2: Additional 23% = ${FTE.toFixed(2)} × 23% = ${additionalCoverage.toFixed(2)}`;
                 steps.appendChild(step2);
             }, 2000);
 
