@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medication Strength Calculator</title>
-        <div class="back-button" style="text-align: center; margin-top: 20px;">
+    <div class="back-button" style="text-align: center; margin-top: 20px;">
         <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
             <i class="fas fa-arrow-left"></i> Back to Home
         </a>
@@ -65,6 +65,11 @@
             font-size: 18px;
             color: #333;
         }
+        .formula {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +88,13 @@
 
         <button type="button" onclick="calculateVolume()">Calculate Required Volume</button>
     </form>
+    
+    <div class="formula">
+        <p><strong>Formula:</strong></p>
+        <p><code>Required Diluent Volume = (Total Final Volume - Available Volume)</code></p>
+        <p><code>Total Final Volume = (Available Volume × Current Strength) / Desired Strength</code></p>
+    </div>
+    
     <p id="result"></p>
 </div>
 
