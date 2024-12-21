@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Dilution Calculator</title>
+    <div class="back-button" style="text-align: center; margin-top: 20px;">
+        <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #003366;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .formula {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Medication Dilution Calculator</h1>
+    <label for="strength">Strength of Medication (mg/ml):</label>
+    <input type="number" id="strength" placeholder="Enter strength (mg/ml)" required>
+
+    <label for="volume">Volume (ml):</label>
+    <input type="number" id="volume" placeholder="Enter volume (ml)" required>
+
+    <label for="dilution">Amount to Dilute (ml):</label>
+    <input type="number" id="dilution" placeholder="Enter dilution amount (ml)" required>
+
+    <button class="btn" onclick="calculateFinalConcentration()">Calculate Final Concentration</button>
+
+    <div class="formula">
+        <h3>Formula:</h3>
+        <p><strong>Final Concentration (mg/ml) = (Strength × Volume) / (Volume + Dilution)</strong></p>
+        <p>Where:</p>
+        <ul>
+            <li><strong>Strength</strong> = Strength of medication (mg/ml)</li>
+            <li><strong>Volume</strong> = Initial volume (ml)</li>
+            <li><strong>Dilution</strong> = Amount of dilution (ml)</li>
+        </ul>
+    </div>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateFinalConcentration() {
+        // Get input values
+        const strength = parseFloat(document.getElementById('strength').value);
+        const volume = parseFloat(document.getElementById('volume').value);
+        const dilution = parseFloat(document.getElementById('dilution').value);
+
+        // Check if inputs are valid
+        if (isNaN(strength) || isNaN(volume) || isNaN(dilution) || strength <= 0 || volume <= 0 || dilution <= 0) {
+            document.getElementById('result').innerHTML = "Please enter valid positive numbers for all fields.";
+            return;
+        }
+
+        // Calculate the final concentration
+        const initialTotalStrength = strength * volume;
+        const finalVolume = volume + dilution;
+        const finalConcentration = initialTotalStrength / finalVolume;
+
+        // Display the result
+        document.getElementById('result').innerHTML = 
+            `The final concentration is <strong>${finalConcentration.toFixed(2)} mg/ml</strong>`;
+    }
+</script>
+
+</body>
+</html>
