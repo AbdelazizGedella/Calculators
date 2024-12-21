@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medication Dilution Calculator</title>
-    <div class="back-button" style="text-align: center; margin-top: 20px;">
+      <div class="back-button" style="text-align: center; margin-top: 20px;">
         <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
             <i class="fas fa-arrow-left"></i> Back to Home
         </a>
@@ -65,9 +65,8 @@
         }
         .formula {
             margin-top: 20px;
-            font-size: 18px;
-            color: #555;
-            text-align: left;
+            font-size: 1.2rem;
+            color: #333;
         }
     </style>
 </head>
@@ -86,18 +85,13 @@
 
     <button class="btn" onclick="calculateFinalConcentration()">Calculate Final Concentration</button>
 
-    <div class="formula">
-        <h3>Formula:</h3>
-        <p><strong>Final Concentration (mg/ml) = (Strength × Volume) / (Volume + Dilution)</strong></p>
-        <p>Where:</p>
-        <ul>
-            <li><strong>Strength</strong> = Strength of medication (mg/ml)</li>
-            <li><strong>Volume</strong> = Initial volume (ml)</li>
-            <li><strong>Dilution</strong> = Amount of dilution (ml)</li>
-        </ul>
-    </div>
-
     <div class="result" id="result"></div>
+
+    <!-- Formula Section -->
+    <div class="formula">
+        <p><strong>Formula:</strong></p>
+        <p><code>Final Concentration (mg/ml) = (Strength × Volume) / (Volume + Dilution)</code></p>
+    </div>
 </div>
 
 <script>
