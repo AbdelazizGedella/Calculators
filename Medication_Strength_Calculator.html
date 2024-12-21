@@ -91,7 +91,7 @@
     
     <div class="formula">
         <p><strong>Formula:</strong></p>
-        <p><code>Volume to Add (ml) = (Current Strength × Original Volume) / Desired Concentration - Original Volume</code></p>
+        <p><code>Volume to Add (ml) = ((Current Strength × Original Volume) / Desired Concentration) - Original Volume</code></p>
     </div>
     
     <p id="result"></p>
@@ -110,17 +110,20 @@
             return;
         }
 
-        // Calculate the volume to add
-        const volumeToAdd = (strengthDose * originalVolume) / desiredStrength - originalVolume;
+        // Calculate the final total volume needed to achieve the desired concentration
+        const finalTotalVolume = (strengthDose * originalVolume) / desiredStrength;
+
+        // Calculate the volume of diluent to add
+        const diluentVolume = finalTotalVolume - originalVolume;
 
         // Check if the calculation is valid (volume to add must be positive)
-        if (volumeToAdd <= 0) {
+        if (diluentVolume <= 0) {
             document.getElementById("result").innerText = "Desired concentration is not achievable with the given inputs.";
             return;
         }
 
         // Display the result
-        document.getElementById("result").innerText = `You should add ${volumeToAdd.toFixed(2)} ml of diluent to achieve a final concentration of ${desiredStrength} mg/ml.`;
+        document.getElementById("result").innerText = `You should add ${diluentVolume.toFixed(2)} ml of diluent to achieve a final concentration of ${desiredStrength} mg/ml.`;
     }
 </script>
 
