@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medication Strength Calculator</title>
+    <title>Medication Dilution Calculator</title>
     <div class="back-button" style="text-align: center; margin-top: 20px;">
         <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
             <i class="fas fa-arrow-left"></i> Back to Home
@@ -75,50 +75,52 @@
 <body>
 
 <div class="calculator">
-    <h2>Medication Strength Calculator</h2>
+    <h2>Medication Dilution Calculator</h2>
     <form id="calculatorForm">
         <label for="strengthDose">Current Strength (mg/ml):</label>
         <input type="number" id="strengthDose" placeholder="Enter current strength (mg/ml)" required>
 
-        <label for="availableVolume">Available Volume (ml):</label>
-        <input type="number" id="availableVolume" placeholder="Enter available volume (ml)" required>
+        <label for="originalVolume">Original Volume (ml):</label>
+        <input type="number" id="originalVolume" placeholder="Enter original volume (ml)" required>
 
         <label for="desiredStrength">Desired Final Strength (mg/ml):</label>
         <input type="number" id="desiredStrength" placeholder="Enter desired final strength (mg/ml)" required>
 
-        <button type="button" onclick="calculateVolume()">Calculate Required Volume</button>
+        <button type="button" onclick="calculateDiluentVolume()">Calculate Volume to Add</button>
     </form>
     
     <div class="formula">
         <p><strong>Formula:</strong></p>
-        <p><code>Required Diluent Volume = (Total Final Volume - Available Volume)</code></p>
-        <p><code>Total Final Volume = (Available Volume × Current Strength) / Desired Strength</code></p>
+        <p><code>Volume to Add (ml) = (Current Strength × Original Volume) / Desired Concentration - Original Volume</code></p>
     </div>
     
     <p id="result"></p>
 </div>
 
 <script>
-    function calculateVolume() {
+    function calculateDiluentVolume() {
         // Get input values
         const strengthDose = parseFloat(document.getElementById("strengthDose").value);
-        const availableVolume = parseFloat(document.getElementById("availableVolume").value);
+        const originalVolume = parseFloat(document.getElementById("originalVolume").value);
         const desiredStrength = parseFloat(document.getElementById("desiredStrength").value);
 
         // Check if inputs are valid
-        if (isNaN(strengthDose) || isNaN(availableVolume) || isNaN(desiredStrength) || desiredStrength > strengthDose || strengthDose <= 0 || availableVolume <= 0 || desiredStrength <= 0) {
-            document.getElementById("result").innerText = "Please enter valid positive values and ensure the desired strength is less than or equal to the current strength.";
+        if (isNaN(strengthDose) || isNaN(originalVolume) || isNaN(desiredStrength) || strengthDose <= 0 || originalVolume <= 0 || desiredStrength <= 0) {
+            document.getElementById("result").innerText = "Please enter valid positive values.";
             return;
         }
 
-        // Calculate the total final volume needed to achieve the desired strength
-        const totalFinalVolume = (availableVolume * strengthDose) / desiredStrength;
+        // Calculate the volume to add
+        const volumeToAdd = (strengthDose * originalVolume) / desiredStrength - originalVolume;
 
-        // Calculate the required diluent volume to add
-        const diluentVolume = totalFinalVolume - availableVolume;
+        // Check if the calculation is valid (volume to add must be positive)
+        if (volumeToAdd <= 0) {
+            document.getElementById("result").innerText = "Desired concentration is not achievable with the given inputs.";
+            return;
+        }
 
         // Display the result
-        document.getElementById("result").innerText = `You should add ${diluentVolume.toFixed(2)} ml of diluent to achieve a total volume of ${totalFinalVolume.toFixed(2)} ml with the desired strength of ${desiredStrength} mg/ml.`;
+        document.getElementById("result").innerText = `You should add ${volumeToAdd.toFixed(2)} ml of diluent to achieve a final concentration of ${desiredStrength} mg/ml.`;
     }
 </script>
 
