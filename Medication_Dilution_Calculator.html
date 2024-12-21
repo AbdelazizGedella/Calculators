@@ -80,7 +80,7 @@
     <label for="volume">Volume (ml):</label>
     <input type="number" id="volume" placeholder="Enter volume (ml)" required>
 
-    <label for="dilution">Amount to Dilute (ml):</label>
+    <label for="dilution">Amount to Dilute in (ml):</label>
     <input type="number" id="dilution" placeholder="Enter dilution amount (ml)" required>
 
     <button class="btn" onclick="calculateFinalConcentration()">Calculate Final Concentration</button>
@@ -90,7 +90,7 @@
     <!-- Formula Section -->
     <div class="formula">
         <p><strong>Formula:</strong></p>
-        <p><code>Final Concentration (mg/ml) = (Strength × Volume) / (Volume + Dilution)</code></p>
+        <p><code>Final Concentration (mg/ml) = (Strength) / (Volume + Dilution)</code></p>
     </div>
 </div>
 
@@ -108,7 +108,7 @@
         }
 
         // Calculate the final concentration
-        const initialTotalStrength = strength * volume;
+        const initialTotalStrength = strength;
         const finalVolume = volume + dilution;
         const finalConcentration = initialTotalStrength / finalVolume;
 
