@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantity Usage Calculator</title>
+    <div class="back-button" style="text-align: center; margin-top: 20px;">
+        <a href="index.html" class="btn btn-primary" style="padding: 10px 20px; font-size: 1rem; text-decoration: none; background-color: #007bff; color: white; border-radius: 5px;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input[type="number"], input[type="datetime-local"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 16px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            font-size: 1.2em;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode .container {
+            background-color: #1e1e1e;
+        }
+        .toggle-dark-mode {
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #007bff;
+        }
+        .toggle-dark-mode:hover {
+            color: #0056b3;
+        }
+    </style>
+    <script>
+        function calculateAmpules() {
+            // Get input values
+            var stockDose = parseFloat(document.getElementById('stockDose').value);
+            var dilutionVolume = parseFloat(document.getElementById('dilutionVolume').value);
+            var strengthPerAmpule = parseFloat(document.getElementById('strengthPerAmpule').value);
+            var infusionRate = parseFloat(document.getElementById('infusionRate').value);
+            var startTime = new Date(document.getElementById('startTime').value);
+            var endTime = new Date(document.getElementById('endTime').value);
+
+            // Validate inputs
+            if (isNaN(stockDose) || isNaN(dilutionVolume) || isNaN(strengthPerAmpule) || isNaN(infusionRate) || 
+                stockDose <= 0 || dilutionVolume <= 0 || strengthPerAmpule <= 0 || infusionRate <= 0) {
+                alert("Please enter valid positive numbers for all fields.");
+                return;
+            }
+            if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+                alert("Please enter valid start and end times.");
+                return;
+            }
+            if (endTime <= startTime) {
+                alert("End time must be after start time.");
+                return;
+            }
+
+            // Calculate time difference in hours
+            var timeDiff = (endTime - startTime) / (1000 * 60 * 60);
+
+            // Calculate the final concentration of the diluted solution
+            var finalConcentration = stockDose / dilutionVolume;
+
+            // Calculate the total amount infused
+            var totalInfusedAmount = timeDiff * infusionRate * finalConcentration;
+
+            // Calculate the number of ampules used
+            var totalAmpulesUsed = totalInfusedAmount / strengthPerAmpule;
+
+            // Display result
+            document.getElementById('result').innerText = 'Total Ampules Used: ' + totalAmpulesUsed.toFixed(2);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quantity Usage Calculator</h1>
+
+        <label for="stockDose">Stock Dose for the infusion (mg or mcg):</label>
+        <input type="number" id="stockDose" step="0.01" required>
+
+        <label for="dilutionVolume">Total Dilution Volume (mL):</label>
+        <input type="number" id="dilutionVolume" step="0.01" required>
+
+        <label for="strengthPerAmpule">Strength per Ampule (mg or mcg):</label>
+        <input type="number" id="strengthPerAmpule" step="0.01" required>
+
+        <label for="infusionRate">Infusion Rate (mL per hour):</label>
+        <input type="number" id="infusionRate" step="0.01" required>
+
+        <label for="startTime">Start Time:</label>
+        <input type="datetime-local" id="startTime" required>
+
+        <label for="endTime">End Time:</label>
+        <input type="datetime-local" id="endTime" required>
+
+        <button onclick="calculateAmpules()">Calculate</button>
+
+        <div class="result" id="result">Total Ampules Used: </div>
+
+        <div class="toggle-dark-mode" onclick="toggleDarkMode()">Toggle Dark Mode</div>
+    </div>
+</body>
+</html>
