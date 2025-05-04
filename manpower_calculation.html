@@ -119,10 +119,11 @@
             <label for="shiftHours" class="fas fa-clock"> Shift working hours:</label>
             <input type="number" id="shiftHours" placeholder="Enter shift hours" required value="12">
 
-            <label for="overtime" class="fas fa-clock"> Overtime (12 hours as overtime):</label>
-            <input type="checkbox" id="overtime" />
-
+            <label for="overtimeHours" class="fas fa-clock"> Overtime Hours:</label>
+            <input type="number" id="overtimeHours" placeholder="Enter overtime hours" />
+            
             <button onclick="calculateManpower()">Calculate Staffing</button>
+            
         </div>
 
         <!-- Display Formula -->
@@ -155,46 +156,43 @@
     <script>
         // Function to perform the manpower calculation
         function calculateManpower() {
-            let staffRequired24hrs = document.getElementById('staffRequired').value;
-            let shiftHours = document.getElementById('shiftHours').value;
-            let overtime = document.getElementById('overtime').checked;
+    let staffRequired24hrs = document.getElementById('staffRequired').value;
+    let shiftHours = document.getElementById('shiftHours').value;
+    let overtimeHours = document.getElementById('overtimeHours').value || 48; // Default to 48 if empty
 
-            // Validate the inputs
-            if (!staffRequired24hrs || !shiftHours) {
-                alert("Please fill in all fields!");
-                return;
-            }
+    // Validate the inputs
+    if (!staffRequired24hrs || !shiftHours) {
+        alert("Please fill in all fields!");
+        return;
+    }
 
-            let steps = document.getElementById('stepsList');
-            let finalStaffing = document.getElementById('finalStaffing');
+    let steps = document.getElementById('stepsList');
+    let finalStaffing = document.getElementById('finalStaffing');
 
-            let divisor = overtime ? 60 : 48;  // Adjust divisor based on overtime check
-            let FTE = (staffRequired24hrs * shiftHours * 7) / divisor; // FTE Calculation
-            let additionalCoverage = FTE * 0.23; // Additional 23% for unproductive days
-            let totalStaffing = FTE + additionalCoverage;
+    let FTE = (staffRequired24hrs * shiftHours * 7) / overtimeHours; // Use user-provided overtime hours
+    let additionalCoverage = FTE * 0.23;
+    let totalStaffing = FTE + additionalCoverage;
 
-            // Clear previous steps
-            steps.innerHTML = "";
+    steps.innerHTML = "";
 
-            // Display the steps with slow-motion effect
-            let step1 = document.createElement('li');
-            step1.textContent = `Step 1: FTE = (${staffRequired24hrs} × ${shiftHours} × 7) / ${divisor} = ${FTE.toFixed(2)}`;
-            steps.appendChild(step1);
+    let step1 = document.createElement('li');
+    step1.textContent = `Step 1: FTE = (${staffRequired24hrs} × ${shiftHours} × 7) / ${overtimeHours} = ${FTE.toFixed(2)}`;
+    steps.appendChild(step1);
 
-            setTimeout(function() {
-                let step2 = document.createElement('li');
-                step2.textContent = `Step 2: Additional 23% = ${FTE.toFixed(2)} × 23% = ${additionalCoverage.toFixed(2)}`;
-                steps.appendChild(step2);
-            }, 2000);
+    setTimeout(function () {
+        let step2 = document.createElement('li');
+        step2.textContent = `Step 2: Additional 23% = ${FTE.toFixed(2)} × 23% = ${additionalCoverage.toFixed(2)}`;
+        steps.appendChild(step2);
+    }, 2000);
 
-            setTimeout(function() {
-                let step3 = document.createElement('li');
-                step3.textContent = `Step 3: Final Staffing = ${FTE.toFixed(2)} + ${additionalCoverage.toFixed(2)} = ${totalStaffing.toFixed(2)}`;
-                steps.appendChild(step3);
+    setTimeout(function () {
+        let step3 = document.createElement('li');
+        step3.textContent = `Step 3: Final Staffing = ${FTE.toFixed(2)} + ${additionalCoverage.toFixed(2)} = ${totalStaffing.toFixed(2)}`;
+        steps.appendChild(step3);
 
-                finalStaffing.textContent = totalStaffing.toFixed(2); // Display final staffing value
-            }, 4000);
-        }
+        finalStaffing.textContent = totalStaffing.toFixed(2);
+    }, 4000);
+}
     </script>
 
 </body>
